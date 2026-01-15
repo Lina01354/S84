@@ -1,0 +1,200 @@
+/* Основные стили для всего сайта */
+:root {
+    --gray-dark: #575757;
+    --gray-medium: #888888;
+    --gray-light: #D9D9D9;
+    --yellow: #F6A103;
+    --white: #FFFFFF;
+    --green: #4CAF50;
+    --orange: #FFC107;
+    --red: #f44336;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--white);
+}
+
+/* Общие стили для кнопок */
+button {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Общие стили для форм */
+input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Утилитарные классы */
+.hidden {
+    display: none !important;
+}
+
+.visible {
+    display: block;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+/* Цветовые классы */
+.bg-gray-dark {
+    background-color: var(--gray-dark);
+}
+
+.bg-gray-medium {
+    background-color: var(--gray-medium);
+}
+
+.bg-gray-light {
+    background-color: var(--gray-light);
+}
+
+.bg-yellow {
+    background-color: var(--yellow);
+}
+
+.text-gray-dark {
+    color: var(--gray-dark);
+}
+
+.text-gray-medium {
+    color: var(--gray-medium);
+}
+
+.text-gray-light {
+    color: var(--gray-light);
+}
+
+.text-yellow {
+    color: var(--yellow);
+}
+
+.text-white {
+    color: var(--white);
+}
+
+.text-green {
+    color: var(--green);
+}
+
+.text-orange {
+    color: var(--orange);
+}
+
+.text-red {
+    color: var(--red);
+}
+
+/* Скрыть стрелки у input type number */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* Стили для скроллбара */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--gray-light);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gray-medium);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-dark);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+    
+    .left-column {
+        width: 100%;
+    }
+    
+    .sidebar {
+        width: 50px;
+    }
+    
+    .nav-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+    }
+}
