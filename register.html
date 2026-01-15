@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация | S84.TODO</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .register-page {
+            min-height: 100vh;
+            background: #575757;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .register-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .register-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .register-header h1 {
+            color: #575757;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .register-header h1 span {
+            color: #F6A103;
+        }
+        
+        .register-subtitle {
+            color: #888888;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #575757;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #D9D9D9;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #575757;
+            background: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #F6A103;
+        }
+        
+        .password-requirements {
+            font-size: 12px;
+            color: #888888;
+            margin-top: 5px;
+            padding-left: 5px;
+        }
+        
+        .password-requirements ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        
+        .password-requirements li {
+            margin-bottom: 3px;
+        }
+        
+        .requirement-valid {
+            color: #4CAF50;
+        }
+        
+        .requirement-invalid {
+            color: #f44336;
+        }
+        
+        .register-btn {
+            width: 100%;
+            padding: 14px;
+            background: #F6A103;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .register-btn:hover {
+            background: #e59200;
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #575757;
+        }
+        
+        .login-link a {
+            color: #F6A103;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .yandex-register {
+            margin-top: 25px;
+            text-align: center;
+        }
+        
+        .yandex-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: #FFCC00;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .yandex-btn:hover {
+            background: #e6b800;
+        }
+        
+        .yandex-icon {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .error-message {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body class="register-page">
+    <div class="register-container">
+        <div class="register-header">
+            <h1>S84.<span>TODO</span></h1>
+            <p class="register-subtitle">Создание нового аккаунта</p>
+        </div>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label>Логин (4-20 символов, только буквы и цифры)</label>
+                <input type="text" class="form-input" id="regUsername" placeholder="Введите логин" required>
+                <div class="error-message" id="usernameError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-input" id="regEmail" placeholder="example@s84.todo" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" class="form-input" id="regPassword" placeholder="Введите пароль" required>
+                <div class="password-requirements">
+                    Пароль должен содержать:
+                    <ul>
+                        <li id="lengthReq">Минимум 8 символов</li>
+                        <li id="letterReq">Хотя бы одну букву</li>
+                        <li id="numberReq">Хотя бы одну цифру</li>
+                    </ul>
+                </div>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>Повтор пароля</label>
+                <input type="password" class="form-input" id="confirmPassword" placeholder="Повторите пароль" required>
+                <div class="error-message" id="confirmError"></div>
+            </div>
+            
+            <button type="submit" class="register-btn">Зарегистрироваться</button>
+            
+            <div class="login-link">
+                Уже есть аккаунт? <a href="index.html">Войти</a>
+            </div>
+        </form>
+        
+        <div class="yandex-register">
+            <p style="color: #888888; margin-bottom: 10px; font-size: 14px;">или</p>
+            <button class="yandex-btn" id="yandexRegister">
+                <span class="yandex-icon">Я</span>
+                Зарегистрироваться через Яндекс
+            </button>
+        </div>
+    </div>
+    
+    <script src="js/scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameInput = document.getElementById('regUsername');
+            const emailInput = document.getElementById('regEmail');
+            const passwordInput = document.getElementById('regPassword');
+            const confirmInput = document.getElementById('confirmPassword');
+            const registerForm = document.getElementById('registerForm');
+            
+            const lengthReq = document.getElementById('lengthReq');
+            const letterReq = document.getElementById('letterReq');
+            const numberReq = document.getElementById('numberReq');
+            
+            // Валидация пароля в реальном времени
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                
+                // Проверка длины
+                if (password.length >= 8) {
+                    lengthReq.classList.add('requirement-valid');
+                    lengthReq.classList.remove('requirement-invalid');
+                } else {
+                    lengthReq.classList.remove('requirement-valid');
+                    lengthReq.classList.add('requirement-invalid');
+                }
+                
+                // Проверка наличия букв
+                if (/[a-zA-Zа-яА-Я]/.test(password)) {
+                    letterReq.classList.add('requirement-valid');
+                    letterReq.classList.remove('requirement-invalid');
+                } else {
+                    letterReq.classList.remove('requirement-valid');
+                    letterReq.classList.add('requirement-invalid');
+                }
+                
+                // Проверка наличия цифр
+                if (/\d/.test(password)) {
+                    numberReq.classList.add('requirement-valid');
+                    numberReq.classList.remove('requirement-invalid');
+                } else {
+                    numberReq.classList.remove('requirement-valid');
+                    numberReq.classList.add('requirement-invalid');
+                }
+                
+                // Проверка совпадения паролей
+                validatePasswordMatch();
+            });
+            
+            // Проверка совпадения паролей
+            confirmInput.addEventListener('input', validatePasswordMatch);
+            
+            function validatePasswordMatch() {
+                const errorElement = document.getElementById('confirmError');
+                if (confirmInput.value && passwordInput.value !== confirmInput.value) {
+                    errorElement.textContent = 'Пароли не совпадают';
+                    errorElement.style.display = 'block';
+                    return false;
+                } else {
+                    errorElement.style.display = 'none';
+                    return true;
+                }
+            }
+            
+            // Валидация логина
+            usernameInput.addEventListener('input', function() {
+                const username = this.value;
+                const errorElement = document.getElementById('usernameError');
+                
+                if (username.length > 0 && username.length < 4) {
+                    errorElement.textContent = 'Минимум 4 символа';
+                    errorElement.style.display = 'block';
+                } else if (username.length > 20) {
+                    errorElement.textContent = 'Максимум 20 символов';
+                    errorElement.style.display = 'block';
+                } else if (username.length >= 4 && !/^[a-zA-Z0-9]+$/.test(username)) {
+                    errorElement.textContent = 'Только буквы и цифры';
+                    errorElement.style.display = 'block';
+                } else {
+                    errorElement.style.display = 'none';
+                }
+            });
+            
+            // Обработка формы регистрации
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = usernameInput.value.trim();
+                const email = emailInput.value.trim();
+                const password = passwordInput.value;
+                const confirmPassword = confirmInput.value;
+                
+                // Скрываем все ошибки
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                let hasError = false;
+                
+                // Валидация логина
+                if (!username) {
+                    document.getElementById('usernameError').textContent = 'Введите логин';
+                    document.getElementById('usernameError').style.display = 'block';
+                    hasError = true;
+                } else if (username.length < 4 || username.length > 20) {
+                    document.getElementById('usernameError').textContent = 'От 4 до 20 символов';
+                    document.getElementById('usernameError').style.display = 'block';
+                    hasError = true;
+                } else if (!/^[a-zA-Z0-9]+$/.test(username)) {
+                    document.getElementById('usernameError').textContent = 'Только буквы и цифры';
+                    document.getElementById('usernameError').style.display = 'block';
+                    hasError = true;
+                }
+                
+                // Валидация email
+                if (!email) {
+                    document.getElementById('emailError').textContent = 'Введите email';
+                    document.getElementById('emailError').style.display = 'block';
+                    hasError = true;
+                } else if (!email.includes('@') || !email.includes('.')) {
+                    document.getElementById('emailError').textContent = 'Введите корректный email';
+                    document.getElementById('emailError').style.display = 'block';
+                    hasError = true;
+                }
+                
+                // Валидация пароля
+                if (!password) {
+                    document.getElementById('passwordError').textContent = 'Введите пароль';
+                    document.getElementById('passwordError').style.display = 'block';
+                    hasError = true;
+                } else if (password.length < 8) {
+                    document.getElementById('passwordError').textContent = 'Минимум 8 символов';
+                    document.getElementById('passwordError').style.display = 'block';
+                    hasError = true;
+                } else if (!/[a-zA-Zа-яА-Я]/.test(password)) {
+                    document.getElementById('passwordError').textContent = 'Хотя бы одна буква';
+                    document.getElementById('passwordError').style.display = 'block';
+                    hasError = true;
+                } else if (!/\d/.test(password)) {
+                    document.getElementById('passwordError').textContent = 'Хотя бы одна цифра';
+                    document.getElementById('passwordError').style.display = 'block';
+                    hasError = true;
+                }
+                
+                // Проверка совпадения паролей
+                if (!confirmPassword) {
+                    document.getElementById('confirmError').textContent = 'Повторите пароль';
+                    document.getElementById('confirmError').style.display = 'block';
+                    hasError = true;
+                } else if (password !== confirmPassword) {
+                    document.getElementById('confirmError').textContent = 'Пароли не совпадают';
+                    document.getElementById('confirmError').style.display = 'block';
+                    hasError = true;
+                }
+                
+                if (hasError) return;
+                
+                // Регистрируем пользователя
+                const result = S84.registerUser(username, password, email);
+                
+                if (result.success) {
+                    // Сохраняем сессию
+                    sessionStorage.setItem('s84_current_user', JSON.stringify(result.user));
+                    
+                    // Перенаправляем на главную страницу
+                    window.location.href = 'dashboard.html';
+                } else {
+                    document.getElementById('usernameError').textContent = result.message;
+                    document.getElementById('usernameError').style.display = 'block';
+                }
+            });
+            
+            // Яндекс регистрация (имитация)
+            document.getElementById('yandexRegister').addEventListener('click', function() {
+                alert('Регистрация через Яндекс\nВ реальном приложении здесь была бы OAuth авторизация');
+            });
+        });
+    </script>
+</body>
+</html>

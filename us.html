@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас | S84.TODO</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #575757;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 60px;
+            background: #575757;
+            border-right: 1px solid #888888;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+        
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            background: #888888;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+        }
+        
+        .nav-icon:hover {
+            background: #F6A103;
+        }
+        
+        .nav-icon.active {
+            background: #F6A103;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            max-width: 800px;
+        }
+        
+        .back-btn {
+            margin-bottom: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: #F6A103;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+        
+        .about-header {
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .logo span {
+            color: #F6A103;
+        }
+        
+        .about-title {
+            font-size: 24px;
+            color: #F6A103;
+            margin-bottom: 20px;
+        }
+        
+        .about-content {
+            background: #D9D9D9;
+            border-radius: 12px;
+            padding: 30px;
+            color: #575757;
+        }
+        
+        .about-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #575757;
+        }
+        
+        .section-text {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .features-list {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .features-list li {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #888888;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #575757;
+        }
+        
+        .contact-item i {
+            color: #F6A103;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Левая панель с иконками -->
+        <div class="sidebar">
+            <a href="dashboard.html" class="nav-icon">
+                <i class="fas fa-home"></i>
+            </a>
+            <div class="nav-icon active">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <a href="profile.html" class="nav-icon">
+                <i class="fas fa-user"></i>
+            </a>
+        </div>
+        
+        <!-- Основной контент -->
+        <div class="main-content">
+            <a href="dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Назад
+            </a>
+            
+            <div class="about-header">
+                <div class="logo">S84.<span>TODO</span></div>
+            </div>
+            
+            <h1 class="about-title">О нас</h1>
+            
+            <div class="about-content">
+                <div class="about-section">
+                    <h2 class="section-title">Что такое S84.TODO?</h2>
+                    <p class="section-text">
+                        S84.TODO - это современная система управления учебными дедлайнами, разработанная специально для студентов колледжей и университетов. Наша цель - помочь студентам организовать учебный процесс, отслеживать сроки сдачи работ и эффективно распределять время.
+                    </p>
+                </div>
+                
+                <div class="about-section">
+                    <h2 class="section-title">Основные возможности</h2>
+                    <ul class="features-list">
+                        <li>Учет дедлайнов по всем дисциплинам</li>
+                        <li>Цветовая маркировка сложности заданий</li>
+                        <li>Визуализация прогресса выполнения</li>
+                        <li>Календарь с отображением всех сроков</li>
+                        <li>Чек-листы по каждой дисциплине</li>
+                        <li>Сортировка заданий по важности и сложности</li>
+                        <li>Простая и интуитивно понятная система</li>
+                    </ul>
+                </div>
+                
+                <div class="about-section">
+                    <h2 class="section-title">Как это работает?</h2>
+                    <p class="section-text">
+                        1. Создайте аккаунт или войдите в существующий<br>
+                        2. Добавьте свои учебные дисциплины<br>
+                        3. Для каждой дисциплины укажите сложность (легко/средне/сложно)<br>
+                        4. Добавляйте задания с указанием сроков выполнения<br>
+                        5. Отслеживайте прогресс в реальном времени<br>
+                        6. Получайте визуальную информацию о приближающихся дедлайнах
+                    </p>
+                </div>
+                
+                <div class="contact-info">
+                    <h2 class="section-title">Контакты</h2>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>support@s84.todo</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <span>www.s84.todo</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Санкт-Петербург, Россия</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+</body>
+</html>

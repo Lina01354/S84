@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход | S84.TODO</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .login-page {
+            min-height: 100vh;
+            background: #575757;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            color: #575757;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .login-header h1 span {
+            color: #F6A103;
+        }
+        
+        .login-subtitle {
+            color: #888888;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #575757;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #D9D9D9;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #575757;
+            background: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #F6A103;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: #F6A103;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .login-btn:hover {
+            background: #e59200;
+        }
+        
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #575757;
+        }
+        
+        .register-link a {
+            color: #F6A103;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .yandex-login {
+            margin-top: 25px;
+            text-align: center;
+        }
+        
+        .yandex-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: #FFCC00;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .yandex-btn:hover {
+            background: #e6b800;
+        }
+        
+        .yandex-icon {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .error-message {
+            color: #ff4444;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-header">
+            <h1>S84.<span>TODO</span></h1>
+            <p class="login-subtitle">Управление дедлайнами колледжа</p>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label>Логин</label>
+                <input type="text" class="form-input" id="loginUsername" placeholder="Введите логин" required>
+                <div class="error-message" id="usernameError"></div>
+            </div>
+            
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" class="form-input" id="loginPassword" placeholder="Введите пароль" required>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+            
+            <button type="submit" class="login-btn">Войти</button>
+            
+            <div class="register-link">
+                Нет аккаунта? <a href="register.html">Зарегистрироваться</a>
+            </div>
+        </form>
+        
+        <div class="yandex-login">
+            <p style="color: #888888; margin-bottom: 10px; font-size: 14px;">или</p>
+            <button class="yandex-btn" id="yandexLogin">
+                <span class="yandex-icon">Я</span>
+                Войти через Яндекс
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            
+            // Скрываем предыдущие ошибки
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            let hasError = false;
+            
+            // Валидация логина
+            if (!username) {
+                document.getElementById('usernameError').textContent = 'Введите логин';
+                document.getElementById('usernameError').style.display = 'block';
+                hasError = true;
+            }
+            
+            // Валидация пароля
+            if (!password) {
+                document.getElementById('passwordError').textContent = 'Введите пароль';
+                document.getElementById('passwordError').style.display = 'block';
+                hasError = true;
+            }
+            
+            if (hasError) return;
+            
+            // Пробуем войти
+            const result = S84.loginUser(username, password);
+            
+            if (result.success) {
+                // Перенаправляем на главную страницу
+                window.location.href = 'dashboard.html';
+            } else {
+                document.getElementById('passwordError').textContent = result.message;
+                document.getElementById('passwordError').style.display = 'block';
+            }
+        });
+        
+        // Яндекс авторизация (имитация)
+        document.getElementById('yandexLogin').addEventListener('click', function() {
+            alert('Вход через Яндекс\nВ реальном приложении здесь была бы OAuth авторизация');
+        });
+    </script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>

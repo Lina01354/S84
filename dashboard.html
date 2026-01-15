@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная | S84.TODO</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #575757;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Левая панель с иконками */
+        .sidebar {
+            width: 60px;
+            background: #575757;
+            border-right: 1px solid #888888;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+        
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            background: #888888;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .nav-icon:hover {
+            background: #F6A103;
+        }
+        
+        .nav-icon.active {
+            background: #F6A103;
+        }
+        
+        /* Основной контент */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Верхняя панель */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .logo span {
+            color: #F6A103;
+        }
+        
+        .profile-btn {
+            background: #888888;
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .profile-btn:hover {
+            background: #F6A103;
+        }
+        
+        /* Контейнер с двумя колонками */
+        .content-wrapper {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+        }
+        
+        /* Левая колонка с календарем */
+        .left-column {
+            width: 300px;
+            background: #D9D9D9;
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #575757;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calendar-nav-btn {
+            background: #888888;
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        
+        .weekday {
+            text-align: center;
+            font-size: 12px;
+            color: #575757;
+            font-weight: 500;
+        }
+        
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-day {
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #575757;
+            cursor: pointer;
+        }
+        
+        .calendar-day:hover {
+            background: #c9c9c9;
+        }
+        
+        .calendar-day.active {
+            background: #F6A103;
+            color: white;
+        }
+        
+        .calendar-day.other-month {
+            color: #888888;
+        }
+        
+        /* Метки под календарем */
+        .labels-section {
+            margin-top: 30px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #575757;
+            margin-bottom: 15px;
+        }
+        
+        .label-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            color: #575757;
+        }
+        
+        .label-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .label-color.completed {
+            background: #4CAF50;
+        }
+        
+        .label-color.not-completed {
+            background: #f44336;
+        }
+        
+        /* Правая колонка с дисциплинами */
+        .right-column {
+            flex: 1;
+            background: #D9D9D9;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .disciplines-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .disciplines-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #575757;
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .sort-btn {
+            background: #888888;
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .sort-btn.active {
+            background: #F6A103;
+        }
+        
+        /* Список дисциплин */
+        .disciplines-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .discipline-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border-left: 4px solid;
+        }
+        
+        .discipline-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .discipline-card.easy {
+            border-left-color: #4CAF50;
+        }
+        
+        .discipline-card.medium {
+            border-left-color: #FFC107;
+        }
+        
+        .discipline-card.hard {
+            border-left-color: #f44336;
+        }
+        
+        .discipline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .discipline-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #575757;
+        }
+        
+        .difficulty-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+        }
+        
+        .difficulty-badge.easy {
+            background: #4CAF50;
+        }
+        
+        .difficulty-badge.medium {
+            background: #FFC107;
+        }
+        
+        .difficulty-badge.hard {
+            background: #f44336;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #D9D9D9;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #F6A103;
+            border-radius: 4px;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #575757;
+        }
+        
+        /* Кнопка добавления */
+        .add-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #F6A103;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(246, 161, 3, 0.3);
+        }
+        
+        .add-btn:hover {
+            background: #e59200;
+        }
+        
+        /* Модальные окна */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #575757;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #888888;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #575757;
+            font-weight: 500;
+        }
+        
+        .form-input, .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #D9D9D9;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #575757;
+        }
+        
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #F6A103;
+        }
+        
+        .difficulty-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .difficulty-option {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #D9D9D9;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .difficulty-option:hover {
+            border-color: #888888;
+        }
+        
+        .difficulty-option.active {
+            border-color: #F6A103;
+            background: rgba(246, 161, 3, 0.1);
+        }
+        
+        .modal-btn {
+            width: 100%;
+            padding: 12px;
+            background: #F6A103;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .modal-btn:hover {
+            background: #e59200;
+        }
+        
+        /* Чек-лист */
+        .checklist-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .checklist-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .checklist-date {
+            font-size: 14px;
+            color: #888888;
+        }
+        
+        .checklist-task {
+            font-size: 16px;
+            color: #575757;
+            margin-bottom: 10px;
+        }
+        
+        .checklist-progress {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checklist-progress-bar {
+            flex: 1;
+            height: 6px;
+            background: #D9D9D9;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .checklist-progress-fill {
+            height: 100%;
+            background: #F6A103;
+            border-radius: 3px;
+        }
+        
+        .checklist-percentage {
+            font-size: 12px;
+            color: #575757;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Левая панель с иконками -->
+        <div class="sidebar">
+            <div class="nav-icon active" id="homeBtn">
+                <i class="fas fa-home"></i>
+            </div>
+            <div class="nav-icon" id="infoBtn">
+                <i class="fas fa-info-circle"></i>
+            </div>
+        </div>
+        
+        <!-- Основной контент -->
+        <div class="main-content">
+            <!-- Верхняя панель -->
+            <div class="top-bar">
+                <div class="logo">S84.<span>TODO</span></div>
+                <button class="profile-btn" id="profileBtn">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+            
+            <!-- Контент с двумя колонками -->
+            <div class="content-wrapper">
+                <!-- Левая колонка с календарем -->
+                <div class="left-column">
+                    <div class="calendar-header">
+                        <div class="calendar-title">< сент 2026 ></div>
+                        <div class="calendar-nav">
+                            <button class="calendar-nav-btn" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                            <button class="calendar-nav-btn" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-weekdays">
+                        <div class="weekday">пн</div>
+                        <div class="weekday">вт</div>
+                        <div class="weekday">ср</div>
+                        <div class="weekday">чт</div>
+                        <div class="weekday">пт</div>
+                        <div class="weekday">сб</div>
+                        <div class="weekday">вс</div>
+                    </div>
+                    
+                    <div class="calendar-days" id="calendarDays">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                    
+                    <div class="labels-section">
+                        <div class="section-title">метки</div>
+                        <div class="label-item" id="notCompletedLabel">
+                            <div class="label-color not-completed"></div>
+                            <span>не выполненные</span>
+                        </div>
+                        <div class="label-item" id="completedLabel">
+                            <div class="label-color completed"></div>
+                            <span>выполненные</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Правая колонка с дисциплинами -->
+                <div class="right-column">
+                    <div class="disciplines-header">
+                        <div class="disciplines-title">дисциплина</div>
+                        <div class="sort-options">
+                            <button class="sort-btn active" data-sort="date">по дате</button>
+                            <button class="sort-btn" data-sort="priority">по важности</button>
+                            <button class="sort-btn" data-sort="difficulty">по сложности</button>
+                        </div>
+                    </div>
+                    
+                    <div class="disciplines-list" id="disciplinesList">
+                        <!-- Динамически заполняется через JS -->
+                    </div>
+                    
+                    <!-- Кнопка добавления новой дисциплины -->
+                    <button class="add-btn" id="addDisciplineBtn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно добавления дисциплины -->
+    <div class="modal-overlay" id="addDisciplineModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Новая дисциплина</div>
+                <button class="close-modal" id="closeDisciplineModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Название дисциплины</label>
+                    <input type="text" class="form-input" id="disciplineName" placeholder="Введите название">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Сложность</label>
+                    <div class="difficulty-options">
+                        <div class="difficulty-option active" data-difficulty="easy">Легко</div>
+                        <div class="difficulty-option" data-difficulty="medium">Средне</div>
+                        <div class="difficulty-option" data-difficulty="hard">Сложно</div>
+                    </div>
+                </div>
+                
+                <button class="modal-btn" id="saveDisciplineBtn">Добавить дисциплину</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно чек-листа -->
+    <div class="modal-overlay" id="checklistModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title" id="checklistTitle">Чек-лист</div>
+                <button class="close-modal" id="closeChecklistModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="checklistContent">
+                    <!-- Динамически заполняется через JS -->
+                </div>
+                <button class="modal-btn" id="addTaskBtn">Добавить задание</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно добавления задания -->
+    <div class="modal-overlay" id="addTaskModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">Новое задание</div>
+                <button class="close-modal" id="closeTaskModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Дата выполнения</label>
+                    <input type="date" class="form-input" id="taskDate">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Описание задания</label>
+                    <input type="text" class="form-input" id="taskDescription" placeholder="Введите описание">
+                </div>
+                
+                <button class="modal-btn" id="saveTaskBtn">Добавить задание</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/scripts.js"></script>
+    <script>
+        // Загрузка данных пользователя
+        const currentUser = S84.loadUserData();
+        let currentDisciplineId = null;
+        
+        // Инициализация страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Если пользователь не авторизован, перенаправляем на вход
+            if (!currentUser) {
+                window.location.href = 'index.html';
+                return;
+            }
+            
+            // Инициализация календаря
+            initCalendar();
+            
+            // Загрузка дисциплин
+            loadDisciplines();
+            
+            // Инициализация обработчиков событий
+            initEventHandlers();
+        });
+        
+        // Инициализация календаря
+        function initCalendar() {
+            const calendarDays = document.getElementById('calendarDays');
+            if (!calendarDays) return;
+            
+            const currentDate = new Date(2026, 8, 1); // Сентябрь 2026
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Получаем первый день месяца
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            
+            // Определяем день недели первого дня
+            let firstDayIndex = firstDay.getDay();
+            if (firstDayIndex === 0) firstDayIndex = 7;
+            
+            // Определяем количество дней в месяце
+            const daysInMonth = lastDay.getDate();
+            
+            // Очищаем контейнер
+            calendarDays.innerHTML = '';
+            
+            // Добавляем пустые ячейки для дней предыдущего месяца
+            for (let i = 1; i < firstDayIndex; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day other-month';
+                dayElement.textContent = '';
+                calendarDays.appendChild(dayElement);
+            }
+            
+            // Добавляем дни текущего месяца
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                dayElement.dataset.day = day;
+                
+                // Отмечаем сегодняшний день (15 сентября)
+                if (day === 15) {
+                    dayElement.classList.add('active');
+                }
+                
+                calendarDays.appendChild(dayElement);
+            }
+            
+            // Добавляем дни следующего месяца для заполнения сетки
+            const totalCells = 42; // 6 строк * 7 дней
+            const remainingCells = totalCells - (firstDayIndex - 1 + daysInMonth);
+            
+            for (let i = 1; i <= remainingCells; i++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day other-month';
+                dayElement.textContent = i;
+                calendarDays.appendChild(dayElement);
+            }
+        }
+        
+        // Загрузка дисциплин
+        function loadDisciplines() {
+            const disciplinesList = document.getElementById('disciplinesList');
+            if (!disciplinesList) return;
+            
+            // Очищаем список
+            disciplinesList.innerHTML = '';
+            
+            // Получаем дисциплины пользователя
+            const disciplines = currentUser.disciplines || [];
+            
+            // Добавляем дисциплины в список
+            disciplines.forEach(discipline => {
+                const disciplineCard = createDisciplineCard(discipline);
+                disciplinesList.appendChild(disciplineCard);
+            });
+        }
+        
+        // Создание карточки дисциплины
+        function createDisciplineCard(discipline) {
+            const card = document.createElement('div');
+            card.className = `discipline-card ${discipline.difficulty}`;
+            card.dataset.id = discipline.id;
+            
+            let difficultyText = '';
+            let difficultyClass = '';
+            
+            switch (discipline.difficulty) {
+                case 'easy':
+                    difficultyText = 'Легко';
+                    difficultyClass = 'easy';
+                    break;
+                case 'medium':
+                    difficultyText = 'Средне';
+                    difficultyClass = 'medium';
+                    break;
+                case 'hard':
+                    difficultyText = 'Сложно';
+                    difficultyClass = 'hard';
+                    break;
+            }
+            
+            card.innerHTML = `
+                <div class="discipline-header">
+                    <div class="discipline-name">${discipline.name}</div>
+                    <div class="difficulty-badge ${difficultyClass}">${difficultyText}</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${discipline.progress}%"></div>
+                </div>
+                <div class="progress-info">
+                    <span>Прогресс</span>
+                    <span>${discipline.progress}%</span>
+                </div>
+            `;
+            
+            // Обработчик клика для открытия чек-листа
+            card.addEventListener('click', function() {
+                openChecklist(discipline);
+            });
+            
+            return card;
+        }
+        
+        // Инициализация обработчиков событий
+        function initEventHandlers() {
+            // Кнопка информации (us.html)
+            const infoBtn = document.getElementById('infoBtn');
+            if (infoBtn) {
+                infoBtn.addEventListener('click', function() {
+                    window.location.href = 'us.html';
+                });
+            }
+            
+            // Кнопка профиля (profile.html)
+            const profileBtn = document.getElementById('profileBtn');
+            if (profileBtn) {
+                profileBtn.addEventListener('click', function() {
+                    window.location.href = 'profile.html';
+                });
+            }
+            
+            // Кнопка добавления дисциплины
+            const addDisciplineBtn = document.getElementById('addDisciplineBtn');
+            const addDisciplineModal = document.getElementById('addDisciplineModal');
+            const closeDisciplineModal = document.getElementById('closeDisciplineModal');
+            const saveDisciplineBtn = document.getElementById('saveDisciplineBtn');
+            
+            if (addDisciplineBtn && addDisciplineModal) {
+                addDisciplineBtn.addEventListener('click', function() {
+                    addDisciplineModal.style.display = 'flex';
+                });
+            }
+            
+            if (closeDisciplineModal && addDisciplineModal) {
+                closeDisciplineModal.addEventListener('click', function() {
+                    addDisciplineModal.style.display = 'none';
+                });
+            }
+            
+            // Выбор сложности
+            const difficultyOptions = document.querySelectorAll('.difficulty-option');
+            difficultyOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    difficultyOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Сохранение дисциплины
+            if (saveDisciplineBtn) {
+                saveDisciplineBtn.addEventListener('click', function() {
+                    const nameInput = document.getElementById('disciplineName');
+                    const name = nameInput.value.trim();
+                    
+                    if (!name) {
+                        alert('Введите название дисциплины');
+                        return;
+                    }
+                    
+                    const activeDifficulty = document.querySelector('.difficulty-option.active');
+                    const difficulty = activeDifficulty ? activeDifficulty.dataset.difficulty : 'medium';
+                    
+                    // Добавляем дисциплину
+                    const newDiscipline = S84.addDiscipline(currentUser, name, difficulty);
+                    
+                    if (newDiscipline) {
+                        // Закрываем модальное окно
+                        addDisciplineModal.style.display = 'none';
+                        
+                        // Очищаем поле ввода
+                        nameInput.value = '';
+                        
+                        // Обновляем список дисциплин
+                        loadDisciplines();
+                        
+                        alert(`Дисциплина "${name}" добавлена!`);
+                    }
+                });
+            }
+            
+            // Сортировка
+            const sortBtns = document.querySelectorAll('.sort-btn');
+            sortBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    sortBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const sortBy = this.dataset.sort;
+                    sortDisciplines(sortBy);
+                });
+            });
+            
+            // Метки
+            const completedLabel = document.getElementById('completedLabel');
+            const notCompletedLabel = document.getElementById('notCompletedLabel');
+            
+            if (completedLabel) {
+                completedLabel.addEventListener('click', function() {
+                    alert('Показать выполненные задания');
+                });
+            }
+            
+            if (notCompletedLabel) {
+                notCompletedLabel.addEventListener('click', function() {
+                    alert('Показать невыполненные задания');
+                });
+            }
+            
+            // Кнопки навигации календаря
+            const prevMonthBtn = document.getElementById('prevMonth');
+            const nextMonthBtn = document.getElementById('nextMonth');
+            
+            if (prevMonthBtn) {
+                prevMonthBtn.addEventListener('click', function() {
+                    alert('Предыдущий месяц');
+                });
+            }
+            
+            if (nextMonthBtn) {
+                nextMonthBtn.addEventListener('click', function() {
+                    alert('Следующий месяц');
+                });
+            }
+            
+            // Закрытие модальных окон по клику на оверлей
+            const modals = document.querySelectorAll('.modal-overlay');
+            modals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
+        // Сортировка дисциплин
+        function sortDisciplines(sortBy) {
+            if (!currentUser.disciplines) return;
+            
+            const sortedDisciplines = S84.sortDisciplines(currentUser.disciplines, sortBy);
+            currentUser.disciplines = sortedDisciplines;
+            
+            // Сохраняем изменения
+            S84.saveUserData(currentUser);
+            
+            // Обновляем отображение
+            loadDisciplines();
+        }
+        
+        // Открытие чек-листа
+        function openChecklist(discipline) {
+            const checklistModal = document.getElementById('checklistModal');
+            const checklistTitle = document.getElementById('checklistTitle');
+            const checklistContent = document.getElementById('checklistContent');
+            
+            if (!checklistModal || !checklistTitle || !checklistContent) return;
+            
+            // Сохраняем ID текущей дисциплины
+            currentDisciplineId = discipline.id;
+            
+            // Устанавливаем заголовок
+            checklistTitle.textContent = `Чек-лист: ${discipline.name}`;
+            
+            // Заполняем контент
+            checklistContent.innerHTML = '';
+            
+            if (discipline.tasks && discipline.tasks.length > 0) {
+                discipline.tasks.forEach((task, index) => {
+                    const taskElement = createChecklistItem(task, index);
+                    checklistContent.appendChild(taskElement);
+                });
+            } else {
+                checklistContent.innerHTML = '<p style="color: #888888; text-align: center;">Нет заданий</p>';
+            }
+            
+            // Открываем модальное окно
+            checklistModal.style.display = 'flex';
+            
+            // Обработчик для кнопки добавления задания
+            const addTaskBtn = document.getElementById('addTaskBtn');
+            if (addTaskBtn) {
+                addTaskBtn.onclick = function() {
+                    openAddTaskModal();
+                };
+            }
+            
+            // Обработчик закрытия
+            const closeChecklistModal = document.getElementById('closeChecklistModal');
+            if (closeChecklistModal) {
+                closeChecklistModal.onclick = function() {
+                    checklistModal.style.display = 'none';
+                };
+            }
+        }
+        
+        // Создание элемента чек-листа
+        function createChecklistItem(task, index) {
+            const item = document.createElement('div');
+            item.className = 'checklist-item';
+            
+            item.innerHTML = `
+                <div class="checklist-header">
+                    <div class="checklist-date">${task.date}</div>
+                    <button class="delete-task" data-index="${index}" style="background: none; border: none; color: #f44336; cursor: pointer;">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="checklist-task">${task.description}</div>
+                <div class="checklist-progress">
+                    <div class="checklist-progress-bar">
+                        <div class="checklist-progress-fill" style="width: ${task.progress}%"></div>
+                    </div>
+                    <div class="checklist-percentage">${task.progress}%</div>
+                </div>
+            `;
+            
+            // Обработчик удаления задания
+            const deleteBtn = item.querySelector('.delete-task');
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (confirm('Удалить это задание?')) {
+                        const taskIndex = parseInt(this.dataset.index);
+                        const success = S84.deleteTask(currentUser, currentDisciplineId, taskIndex);
+                        
+                        if (success) {
+                            // Находим дисциплину
+                            const discipline = currentUser.disciplines.find(d => d.id === currentDisciplineId);
+                            if (discipline) {
+                                openChecklist(discipline);
+                                loadDisciplines();
+                            }
+                        }
+                    }
+                });
+            }
+            
+            return item;
+        }
+        
+        // Открытие модального окна добавления задания
+        function openAddTaskModal() {
+            const addTaskModal = document.getElementById('addTaskModal');
+            if (!addTaskModal) return;
+            
+            // Устанавливаем текущую дату как значение по умолчанию
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('taskDate').value = formattedDate;
+            
+            // Очищаем описание
+            document.getElementById('taskDescription').value = '';
+            
+            // Открываем модальное окно
+            addTaskModal.style.display = 'flex';
+            
+            // Обработчик сохранения задания
+            const saveTaskBtn = document.getElementById('saveTaskBtn');
+            if (saveTaskBtn) {
+                saveTaskBtn.onclick = function() {
+                    saveTask();
+                };
+            }
+            
+            // Обработчик закрытия
+            const closeTaskModal = document.getElementById('closeTaskModal');
+            if (closeTaskModal) {
+                closeTaskModal.onclick = function() {
+                    addTaskModal.style.display = 'none';
+                };
+            }
+        }
+        
+        // Сохранение задания
+        function saveTask() {
+            const taskDate = document.getElementById('taskDate').value;
+            const taskDescription = document.getElementById('taskDescription').value.trim();
+            
+            if (!taskDate) {
+                alert('Выберите дату выполнения');
+                return;
+            }
+            
+            if (!taskDescription) {
+                alert('Введите описание задания');
+                return;
+            }
+            
+            if (!currentDisciplineId) {
+                alert('Ошибка: дисциплина не выбрана');
+                return;
+            }
+            
+            // Добавляем задание
+            const newTask = S84.addTaskToDiscipline(
+                currentUser,
+                currentDisciplineId,
+                taskDate,
+                taskDescription
+            );
+            
+            if (newTask) {
+                // Закрываем модальные окна
+                document.getElementById('addTaskModal').style.display = 'none';
+                document.getElementById('checklistModal').style.display = 'none';
+                
+                // Находим дисциплину
+                const discipline = currentUser.disciplines.find(d => d.id === currentDisciplineId);
+                if (discipline) {
+                    // Обновляем чек-лист
+                    openChecklist(discipline);
+                    
+                    // Обновляем список дисциплин
+                    loadDisciplines();
+                    
+                    alert('Задание успешно добавлено!');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
